@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strona z menu i wideo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            cursor: pointer;
+        }
+
+        /* Widok menu */
+        #menu-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #menu-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        /* Widok odtwarzacza wideo */
+        #video-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+        }
+
+        #film {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Lub 'contain', jeśli nie chcesz przycinać filmu */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Menu wyświetlane na start -->
+    <div id="menu-container">
+        <img src="menu.png" alt="Menu" id="menu-img">
+    </div>
+
+    <!-- Odtwarzacz z filmem -->
+    <div id="video-container">
+        <video id="film" src="film.mp4" playsinline></video>
+    </div>
+
+    <script>
+        const menuContainer = document.getElementById('menu-container');
+        const videoContainer = document.getElementById('video-container');
+        const video = document.getElementById('film');
+
+        // Kliknięcie w dowolnym miejscu na stronie
+        document.addEventListener('click', function startVideo() {
+            // Ukrywamy menu, pokazujemy wideo
+            menuContainer.style.display = 'none';
+            videoContainer.style.display = 'block';
+
+            // Uruchamiamy odtwarzanie z dźwiękiem
+            video.play().catch(error => {
+                console.log("Błąd odtwarzania wideo:", error);
+            });
+
+            // Usuwamy nasłuchiwanie kliknięcia, żeby ponowne kliknięcia nie restartowały procesu
+            document.removeEventListener('click', startVideo);
+        });
+    </script>
+
+</body>
+</html>
